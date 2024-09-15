@@ -26,7 +26,7 @@ function App(): React.JSX.Element {
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name="SignIn" component={SignIn} />
+                <Stack.Screen name="SignIn" options={{ headerShown: false }} component={SignIn} />
             </Stack.Navigator>
         </NavigationContainer>
     );
