@@ -1,9 +1,25 @@
+import React, { useEffect } from "react";
 import { View, Text, ImageBackground, TextInput } from "react-native";
 import styled from "styled-components/native";
+import { useNavigation } from "@react-navigation/native";
 export default function SignIn() {
+    const navigation = useNavigation();
+    useEffect(() => {
+        sendMessage();
+    }, []);
+    async function sendMessage() {
+        await fetch("http://localhost:3000/messages")
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Mensagens:", data);
+            })
+            .catch((error) => console.error("Erro:", error));
+    }
     return (
         <ImageBackground style={{ flex: 1, padding: 20, justifyContent: "flex-end" }} source={require("../../assets/images/bd-signin.png")}>
             <Container>
+                {/*                 <NotificationTester />
+                 */}
                 <LogoText>Heat</LogoText>
                 <MarketingText>
                     Chat, share, and <PurpleText>connect</PurpleText> with your friends in real
@@ -15,7 +31,7 @@ export default function SignIn() {
                     <LabelText>Password</LabelText>
                     <Input secureTextEntry placeholder="******" />
                 </ContainerForm>
-                <ButtonSubmit>
+                <ButtonSubmit onPress={() => navigation.navigate("Home")}>
                     <LabelButton>Entrar</LabelButton>
                 </ButtonSubmit>
             </Container>

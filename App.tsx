@@ -1,33 +1,26 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React from "react";
+import React, { useState, useEffect } from "react";
 import type { PropsWithChildren } from "react";
 import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, useColorScheme, View } from "react-native";
 
 import { Colors, DebugInstructions, Header, LearnMoreLinks, ReloadInstructions } from "react-native/Libraries/NewAppScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import SignIn from "./src/screens/auth/sign-in";
-
-const Stack = createNativeStackNavigator();
-
+import AppRoutes from "./src/routes/app";
+import AuthRoutes from "./src/routes/auth";
+const RootStack = createNativeStackNavigator();
 function App(): React.JSX.Element {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const isDarkMode = useColorScheme() === "dark";
-
+    useEffect(() => {
+        setIsAuthenticated(false);
+    }, [0]);
     const backgroundStyle = {
         backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
     };
-
+    console.log(isAuthenticated, "IS AUTHENTICATEDå");
     return (
         <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen name="SignIn" options={{ headerShown: false }} component={SignIn} />
-            </Stack.Navigator>
+            {isAuthenticated ? <RootStack.Screen name="AppRoutes" component={AppRoutes} /> : <RootStack.Screen name="AuthRoutes" component={AuthRoutes} />}
         </NavigationContainer>
     );
 }
